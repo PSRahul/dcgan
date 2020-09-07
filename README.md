@@ -1,2 +1,2 @@
 # dcgan
-Implementation of DCGAN based on Pytorch
+Implementation of **DCGAN** based on Pytorch
