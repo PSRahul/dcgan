@@ -6,35 +6,37 @@ class GenModel(nn.Module):
 
     def __init__(self, hparams):
 
-        super(GenModel, self).__init__()
+        super().__init__()
 
         self.hparams = hparams
 
         self.network = nn.Sequential(
 
             nn.ConvTranspose2d(
-                self.hparams["z_shape"], self.hparams["final_layer_size"] * 8, 4, 1, 0, bias=False),
-            nn.BatchNorm2d(self.hparams["final_layer_size"] * 8),
-            nn.ReLU(True),
-
-            nn.ConvTranspose2d(self.hparams["final_layer_size"] * 8,
-                               self.hparams["final_layer_size"] * 4, 4, 2, 1, bias=False),
-            nn.BatchNorm2d(self.hparams["final_layer_size"] * 4),
-            nn.ReLU(True),
-
-            nn.ConvTranspose2d(self.hparams["final_layer_size"] * 4,
-                               self.hparams["final_layer_size"] * 2, 4, 2, 1, bias=False),
-            nn.BatchNorm2d(self.hparams["final_layer_size"] * 2),
-            nn.ReLU(True),
-
-            nn.ConvTranspose2d(self.hparams["final_layer_size"] * 2,
-                               self.hparams["final_layer_size"], 4, 2, 1, bias=False),
-            nn.BatchNorm2d(self.hparams["final_layer_size"]),
-            nn.ReLU(True),
+                in_channels=self.hparams["z_shape"], out_channels=self.hparams["gen_final_layer_size"] * 8, kernel_size=4),
+            nn.BatchNorm2d(self.hparams["gen_final_layer_size"] * 8),
+            nn.PReLU(),
 
             nn.ConvTranspose2d(
-                self.hparams["final_layer_size"], 3, 4, 2, 1, bias=False),
+                in_channels=self.hparams["gen_final_layer_size"] * 8, out_channels=self.hparams["gen_final_layer_size"] * 16, kernel_size=4, stride=2, padding=1),
+            nn.BatchNorm2d(self.hparams["gen_final_layer_size"] * 16),
+            nn.PReLU(),
+
+            nn.ConvTranspose2d(
+                in_channels=self.hparams["gen_final_layer_size"] * 16, out_channels=self.hparams["gen_final_layer_size"] * 32, kernel_size=4, stride=2, padding=1),
+            nn.BatchNorm2d(self.hparams["gen_final_layer_size"] * 32),
+            nn.PReLU(),
+
+            nn.ConvTranspose2d(
+                in_channels=self.hparams["gen_final_layer_size"] *32, out_channels=self.hparams["gen_final_layer_size"] * 64, kernel_size=4, stride=2, padding=1),
+            nn.BatchNorm2d(self.hparams["gen_final_layer_size"] * 64),
+            nn.PReLU(),
+
+            nn.ConvTranspose2d(
+                in_channels=self.hparams["gen_final_layer_size"] * 64, out_channels=3, kernel_size=4, stride=2, padding=1),
             nn.Tanh()
+
+
 
         )
 
