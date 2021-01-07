@@ -31,9 +31,12 @@ hparams = {
     'gen_final_layer_size': 3,
     'image_input_shape': 64,
     'batch_size': 128,
-    'epochs': 5
+    'epochs': 3,
+    'dropout_1':0,
+    'dropout_2':0,
+    
 }
-
+savestring="dp1"+str(int(hparams['dropout_1']*10))+"dp2"+str(int(hparams['dropout_2']*10))
 
 # In[ ]:
 
@@ -68,7 +71,7 @@ loss_function = torch.nn.BCELoss(reduction='mean')
 # In[ ]:
 
 
-logdir = "logs/" + datetime.now().strftime("%Y%m%d-%H%M%S")
+logdir = "logs/" +savestring+ datetime.now().strftime("%Y%m%d-%H%M%S")
 writer = SummaryWriter(logdir)
 
 
@@ -178,12 +181,12 @@ for epoch in tqdm(range(hparams['epochs'])):
        
     
     
-    torch.save(dis_model.state_dict(), "models/dis"+str(epoch))
-    torch.save(gen_model.state_dict(), "models/gen"+str(epoch))
+    torch.save(dis_model.state_dict(), "models/dis"+str(epoch)+savestring)
+    torch.save(gen_model.state_dict(), "models/gen"+str(epoch)+savestring)
     gen_model.eval()
     with torch.no_grad():
         img_out_full=gen_model(vis_noise)
-        torchvision.utils.save_image(img_out_full,fp="figures/epoch"+str(epoch)+".png",normalize=True,nrow=2)
+        torchvision.utils.save_image(img_out_full,fp="figures/epoch"+str(epoch)+savestring+".png",normalize=True,nrow=2)
 
 
       
