@@ -18,6 +18,13 @@ from tqdm import tqdm
 import numpy as np
 import matplotlib.pyplot as plt
 import torchvision  
+import argparse
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--d1', required=True)
+parser.add_argument('--d2', required=True)
+args = parser.parse_args()
 
 #get_ipython().run_line_magic('load_ext', 'autoreload')
 #get_ipython().run_line_magic('autoreload', '2')
@@ -32,8 +39,8 @@ hparams = {
     'image_input_shape': 64,
     'batch_size': 128,
     'epochs': 3,
-    'dropout_1':0.3,
-    'dropout_2':0.3,
+    'dropout_1':float(args.d1),
+    'dropout_2':float(args.d2),
     
 }
 savestring="dp1"+str(int(hparams['dropout_1']*10))+"dp2"+str(int(hparams['dropout_2']*10))
