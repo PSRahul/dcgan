@@ -5,7 +5,7 @@ import torchvision.transforms as transforms
 
 
 def data_setup(batch_size=16, image_size=64):
-    image_path = os.path.join(os.getcwd(), "data/datainit")
+    image_path = os.path.join(os.getcwd(), "data/fulldata")
 
     image_data = ImageFolder(root=image_path,
                              transform=transforms.Compose([
@@ -15,6 +15,7 @@ def data_setup(batch_size=16, image_size=64):
 
     data_loader = DataLoader(image_data,
                              batch_size=batch_size,
-                             num_workers=6)
+                             num_workers=6,
+                             drop_last=True)
 
     return data_loader
