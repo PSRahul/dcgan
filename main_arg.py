@@ -78,7 +78,7 @@ loss_function = torch.nn.BCELoss(reduction='mean')
 # In[ ]:
 
 
-logdir = "logs/" +savestring+ datetime.now().strftime("%Y%m%d-%H%M%S")
+logdir = "logs/" +savestring#+ datetime.now().strftime("%Y%m%d-%H%M%S")
 writer = SummaryWriter(logdir)
 
 
