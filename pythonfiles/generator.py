@@ -53,7 +53,7 @@ class GenModel(nn.Module):
 
             nn.ConvTranspose2d(
                 in_channels=self.hparams["gen_final_layer_size"] * 64, out_channels=3, kernel_size=4, stride=2, padding=1),
-            nn.ReLU()
+            nn.Tanh()
 
 
 

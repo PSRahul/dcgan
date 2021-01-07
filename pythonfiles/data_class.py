@@ -4,8 +4,8 @@ import os
 import torchvision.transforms as transforms
 
 
-def data_setup(batch_size=16, image_size=64):
-    image_path = os.path.join(os.getcwd(), "data/fulldata")
+def data_setup(foldername="data/fulldata",batch_size=16, image_size=64):
+    image_path = os.path.join(os.getcwd(),foldername)
 
     image_data = ImageFolder(root=image_path,
                              transform=transforms.Compose([
