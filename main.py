@@ -1,7 +1,7 @@
-###!/usr/bin/env python
+#!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[ ]:
 
 
 from pythonfiles.data_class import *
@@ -17,31 +17,32 @@ from datetime import datetime
 from tqdm import tqdm
 import numpy as np
 import matplotlib.pyplot as plt
+import torchvision  
 
 #get_ipython().run_line_magic('load_ext', 'autoreload')
 #get_ipython().run_line_magic('autoreload', '2')
 
 
-# In[2]:
+# In[ ]:
 
 
 hparams = {
     'z_shape': 128,
     'gen_final_layer_size': 3,
     'image_input_shape': 64,
-    'batch_size': 256,
+    'batch_size': 128,
     'epochs': 5
 }
 
 
-# In[3]:
+# In[ ]:
 
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("Using the  Device - ", device)
 
 
-# In[4]:
+# In[ ]:
 
 
 
@@ -55,7 +56,7 @@ dis_model = dis_model.to(device)
 gen_model = gen_model.to(device)
 
 
-# In[5]:
+# In[ ]:
 
 
 
@@ -64,7 +65,7 @@ dis_optimizer = torch.optim.Adam(dis_model.parameters(),lr=0.0002,betas=(0.5, 0.
 loss_function = torch.nn.BCELoss(reduction='mean')
 
 
-# In[6]:
+# In[ ]:
 
 
 logdir = "logs/" + datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -83,7 +84,7 @@ writer = SummaryWriter(logdir)
 
 
 
-# In[7]:
+# In[ ]:
 
 
 #from torchsummary import summary
@@ -92,15 +93,22 @@ writer = SummaryWriter(logdir)
 #summary(dis_model,(3,64,64))
 
 
-# In[8]:
+# In[ ]:
 
 
 real_dataloader = data_setup(batch_size=hparams['batch_size'],foldername="data/fulldata")
-real_label = torch.ones(hparams['batch_size'], 1,device=device)
+real_label_dis = torch.ones(hparams['batch_size'], 1,device=device)
 fake_label = torch.zeros(hparams['batch_size'], 1,device=device)
+real_label_gen = torch.ones(hparams['batch_size'], 1,device=device)
 
 
-# In[9]:
+# In[ ]:
+
+
+vis_noise = torch.randn(8, hparams['z_shape'], 1, 1, device=device)
+
+
+# In[ ]:
 
 
 dis_fn_real_list = []
@@ -111,7 +119,8 @@ gen_loss_list = []
 cntr = 0
 for epoch in tqdm(range(hparams['epochs'])):
     for data in tqdm(real_dataloader):
-
+        dis_model.train()
+        gen_model.train()
         #dis_model.zero_grad()
         dis_optimizer.zero_grad()
 
@@ -123,7 +132,7 @@ for epoch in tqdm(range(hparams['epochs'])):
         #dis_fn_real_list.append(torch.mean(real_outputs.detach().cpu()))
         #writer.add_scalar('Discriminator Function Real',
         #                  torch.mean(real_outputs.detach().cpu()), cntr)
-        real_loss = loss_function(real_outputs, real_label)
+        real_loss = loss_function(real_outputs, real_label_dis)
         real_loss.backward()
         running_real_loss = real_loss.item()
 
@@ -157,7 +166,7 @@ for epoch in tqdm(range(hparams['epochs'])):
         #gen_model.zero_grad()
         fake_outputs = dis_model(fake_image)
 
-        gen_loss = loss_function(fake_outputs, real_label)
+        gen_loss = loss_function(fake_outputs, real_label_gen)
         running_gen_loss = gen_loss.item()
         gen_loss_list.append(running_gen_loss)
         writer.add_scalar('Generator Loss', running_gen_loss, cntr)
@@ -171,24 +180,15 @@ for epoch in tqdm(range(hparams['epochs'])):
     
     torch.save(dis_model.state_dict(), "models/dis"+str(epoch))
     torch.save(gen_model.state_dict(), "models/gen"+str(epoch))
+    gen_model.eval()
+    with torch.no_grad():
+        img_out_full=gen_model(vis_noise)
+        torchvision.utils.save_image(img_out_full,fp="figures/epoch"+str(epoch)+".png",normalize=True,nrow=2)
 
-    for idx in tqdm(range(int(hparams['batch_size']/20))):
-        img_out=fake_image[idx].detach().cpu().numpy()
-        img_out=np.transpose(img_out,(1,2,0))
 
-        img_out_rescaled=(img_out+1)*255/2
-        img_out_rescaled=img_out_rescaled.astype(np.uint8)
-        
-        plt.imsave("figures/sample_epoch"+str(epoch)+"_"+str(idx)+".png",img_out_rescaled)
-     
+      
 
     
-
-
-# In[57]:
-
-
-
 
 
 # In[ ]:
