@@ -22,9 +22,9 @@ Model state dictionaries for models with different dropouts values are provided 
 
 Some generated face images are stored in <code>samples</code> folder with the <code>d1</code> and <code>d2</code> used.
 
-![](samples/dp12dp20.png)            | ![](samples/dp12dp20.png)
+![](samples/dp12dp20.png)            | ![](samples/dp17dp27_2.png)
 :-------------------------:|:-------------------------:
-![](samples/dp12dp20.png)  |  ![](sample_images/dp15dp25.png)
+![](samples/dp17dp27.png)  |  ![](sample_images/dp17dp27_1.png)
 
 ### References  
 [1]http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html  
