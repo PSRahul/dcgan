@@ -15,7 +15,8 @@ Various values of dropouts were tried.
 
 <code>./sample_generator.py --d1 [argument] --d2 [argument] </code>
 
-State dictionaries for different dropouts values are provided for trained models in <code>models</code> folder
+Model state dictionaries for models with different dropouts values are provided for trained models in <code>models</code> folder
+
 
 ### Sample Images
 
