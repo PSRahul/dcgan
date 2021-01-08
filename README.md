@@ -7,6 +7,9 @@ A random sample vector as well as a dropout was used in both the Discriminator a
 Various values of dropouts were tried.
 
 ### Training Method 
+
+Download the images into a <code>data/celeba/</code> folder.
+
 <code>./train.py --d1 [argument] --d2 [argument] </code>
 
 <code>d1 and d2</code> are dropout values that are applied on the odd and even layers of the network respectively.They can be independently chosen.
