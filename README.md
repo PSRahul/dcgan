@@ -9,7 +9,7 @@ Various values of dropouts were tried.
 ### Training Method 
 <code>./train.py --d1 [argument] --d2 [argument] </code>
 
-d1 droupout and d2 dropout is applied on the odd and even layers of the network respectively.They can be independently chosen.
+<code>d1 and d2</code> are dropout values that are applied on the odd and even layers of the network respectively.They can be independently chosen.
 
 ### Sample Generation
 
