@@ -22,6 +22,10 @@ Model state dictionaries for models with different dropouts values are provided 
 
 Some generated face images are stored in <code>samples</code> folder with the <code>d1</code> and <code>d2</code> used.
 
+Sample1            |  Sample 2
+:-------------------------:|:-------------------------:
+![](samples/dp12dp20.png)  |  ![](sample_images/dp15dp25.png)
+
 ### References  
 [1]http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html  
 [2]https://pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html
