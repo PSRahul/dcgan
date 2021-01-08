@@ -8,7 +8,7 @@ Various values of dropouts were tried.
 
 ### Training Method 
 
-Download the images into a <code>data/celeba/</code> folder.
+Download the images into <code>data/celeba/</code> folder in the same directory.
 
 <code>./train.py --d1 [argument] --d2 [argument] </code>
 
