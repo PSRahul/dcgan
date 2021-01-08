@@ -38,7 +38,7 @@ hparams = {
     'gen_final_layer_size': 3,
     'image_input_shape': 64,
     'batch_size': 128,
-    'epochs': 3,
+    'epochs': 5,
     'dropout_1':float(args.d1),
     'dropout_2':float(args.d2),
     
