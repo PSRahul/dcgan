@@ -29,6 +29,9 @@ Some generated face images are stored in <code>samples</code> folder with the <c
 :-------------------------:|:-------------------------:
 ![](samples/dp17dp27.png)  | ![](samples/dp16dp20_2.png)
 
+### Future Scope
+Decrease single mode generator outputs by adding more random noise to the generator network
+
 ### References  
 [1] http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html  
 [2] https://pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html
